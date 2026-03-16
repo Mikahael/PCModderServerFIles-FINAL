@@ -52,6 +52,16 @@ config['partyIsPublic'] = True
 # 43210 is the default and the only port that will show up in the LAN
 # browser tab.
 config['port'] = 43210
+try:
+    with open("server.properties", "r") as f:
+        for line in f:
+            if line.startswith("server-port"):
+                config['port'] = int(line.strip().split("=")[1])
+                break
+except Exception as e:
+    print("Failed to read server.properties, using default port", config['port'])
+
+print("Server will use port:", config['port'])
 
 # Language the server will run in.
 # This is no longer terribly relevant, as all clients now see the game in their
